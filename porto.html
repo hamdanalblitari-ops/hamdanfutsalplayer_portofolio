@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="id" class="dark scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HAMDAN #7 | Futsal Player Profile - UPGRADE FUTSAL ACADEMY</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Rajdhani & Chakra Petch for Sporty Gaming Typography, Inter for Clean UI -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,600;0,700;1,700&family=Inter:wght@400;500;600;700&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- External Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        sport: ['Rajdhani', 'sans-serif'],
+                        tech: ['Chakra Petch', 'sans-serif'],
+                    },
+                    colors: {
+                        ef: {
+                            bg: '#090b0e',
+                            panel: '#11151c',
+                            card: '#161b24',
+                            border: '#232b38',
+                            neon: '#00ff87',
+                            cyan: '#00e5ff',
+                            yellow: '#facc15',
+                            orange: '#fb923c',
+                            muted: '#8b9bb4'
+                        }
+                    },
+                    boxShadow: {
+                        'neon': '0 0 15px rgba(0, 255, 135, 0.25)',
+                        'cyan': '0 0 15px rgba(0, 229, 255, 0.25)',
+                        'card': '0 10px 30px -5px rgba(0, 0, 0, 0.7)'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="antialiased selection:bg-ef-neon selection:text-black">
+
+    <!-- TOP GAMING HUD NAVIGATION -->
+    <header class="sticky top-0 z-40 bg-ef-bg/90 backdrop-blur-md border-b border-ef-border">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Brand / Player Tag -->
+                <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-ef-neon to-ef-cyan flex items-center justify-center text-black font-tech font-bold text-xl shadow-neon">
+                        7
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <span class="font-tech font-bold text-lg tracking-wider text-white">HAMDAN</span>
+                            <span class="text-[10px] font-bold uppercase px-1.5 py-0.5 rounded bg-ef-neon/15 text-ef-neon border border-ef-neon/30">RF</span>
+                        </div>
+                        <p class="text-[11px] text-ef-muted tracking-wide uppercase">UPGRADE FUTSAL ACADEMY</p>
+                    </div>
+                </div>
+
+                <!-- Desktop Navigation Links -->
+                <nav class="hidden md:flex items-center gap-1 bg-ef-panel/80 p-1 rounded-xl border border-ef-border">
+                    <a href="#overview" data-target="overview" class="nav-link px-3.5 py-1.5 rounded-lg text-xs font-tech font-semibold uppercase tracking-wider text-ef-muted hover:text-white transition">Overview</a>
+                    <a href="#attributes" data-target="attributes" class="nav-link px-3.5 py-1.5 rounded-lg text-xs font-tech font-semibold uppercase tracking-wider text-ef-muted hover:text-white transition">Attributes</a>
+                    <a href="#tactics" data-target="tactics" class="nav-link px-3.5 py-1.5 rounded-lg text-xs font-tech font-semibold uppercase tracking-wider text-ef-muted hover:text-white transition">Position & Style</a>
+                    <a href="#profile" data-target="profile" class="nav-link px-3.5 py-1.5 rounded-lg text-xs font-tech font-semibold uppercase tracking-wider text-ef-muted hover:text-white transition">About</a>
+                </nav>
+
+                <!-- Action Buttons (Edit Stats, Theme Toggle & Contact) -->
+                <div class="flex items-center gap-2 sm:gap-3">
+                    <button onclick="toggleTheme()" class="flex items-center justify-center w-9 h-9 rounded-lg bg-ef-card hover:bg-ef-border text-ef-yellow border border-ef-border text-xs transition shadow-sm" title="Ubah Tema Terang / Gelap">
+                        <i id="theme-icon" class="fa-solid fa-moon"></i>
+                    </button>
+                    <button onclick="toggleStatsDrawer()" class="flex items-center gap-2 px-3 py-2 rounded-lg bg-ef-card hover:bg-ef-border text-ef-cyan border border-ef-cyan/30 hover:border-ef-cyan text-xs font-tech font-bold uppercase tracking-wider transition shadow-sm" title="Atur Rating & Foto">
+                        <i class="fa-solid fa-sliders"></i>
+                        <span class="hidden sm:inline">Edit Stats</span>
+                    </button>
+                    <button onclick="openContactModal()" class="flex items-center gap-2 px-3.5 py-2 rounded-lg bg-ef-neon hover:bg-emerald-400 text-black font-tech font-bold text-xs uppercase tracking-wider transition shadow-neon">
+                        <i class="fa-solid fa-paper-plane"></i>
+                        <span>Kontak</span>
+                    </button>
+                    <!-- Mobile Menu Toggle -->
+                    <button onclick="toggleMobileMenu()" class="md:hidden p-2 rounded-lg bg-ef-panel border border-ef-border text-slate-300 hover:text-white">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Dropdown Navigation -->
+        <div id="mobile-menu" class="hidden md:hidden bg-ef-panel border-b border-ef-border px-4 py-3 space-y-1">
+            <a href="#overview" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-lg text-xs font-tech font-bold uppercase tracking-wider text-ef-neon bg-ef-card">01. Player Overview</a>
+            <a href="#attributes" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-lg text-xs font-tech font-bold uppercase tracking-wider text-slate-300 hover:bg-ef-card">02. Player Attributes</a>
+            <a href="#tactics" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-lg text-xs font-tech font-bold uppercase tracking-wider text-slate-300 hover:bg-ef-card">03. Position & Playing Style</a>
+            <a href="#profile" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-lg text-xs font-tech font-bold uppercase tracking-wider text-slate-300 hover:bg-ef-card">04. About Player</a>
+            <a href="#gallery" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-lg text-xs font-tech font-bold uppercase tracking-wider text-slate-300 hover:bg-ef-card">05. Match & Training Gallery</a>
+        </div>
+    </header>
+
+    <!-- MAIN DASHBOARD CONTENT -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-8">
+
+        <!-- SYSTEM NOTICE BANNER -->
+        <div class="bg-ef-panel/90 border border-ef-yellow/30 rounded-xl px-4 py-2.5 flex flex-wrap items-center justify-between gap-2 text-xs">
+            <div class="flex items-center gap-2.5 text-slate-300">
+                <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-ef-yellow/20 text-ef-yellow">
+                    <i class="fa-solid fa-circle-info text-[11px]"></i>
+                </span>
+                <span>
+                    <strong class="text-ef-yellow font-tech uppercase tracking-wider">Mode Konfigurasi Pemain:</strong> 
+                    Nilai statistik saat ini adalah <em>placeholder / contoh</em>. Klik tombol <strong class="text-ef-cyan">"Edit Stats"</strong> untuk memperbarui rating secara mandiri.
+                </span>
+            </div>
+            <button onclick="toggleStatsDrawer()" class="text-ef-neon hover:underline font-tech font-bold uppercase tracking-wider text-[11px] flex items-center gap-1">
+                Sesuaikan Sekarang <i class="fa-solid fa-arrow-right"></i>
+            </button>
+        </div>
+
+        <!-- SECTION A: PLAYER OVERVIEW -->
+        <section id="overview" class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+            <div class="lg:col-span-5 flex flex-col sm:flex-row gap-4 items-stretch">
+                <!-- Main Player Card -->
+                <div class="player-card-container flex-1">
+                    <div class="player-card w-full rounded-2xl p-5 shadow-card flex flex-col justify-between h-full">
+                        <div class="relative z-10 flex items-start justify-between">
+                            <div>
+                                <div class="flex items-baseline gap-1.5">
+                                    <span id="card-ovr" class="font-tech font-bold text-5xl leading-none text-ef-neon drop-shadow-[0_0_10px_rgba(0,255,135,0.5)]">84</span>
+                                </div>
+                                <div class="mt-1 flex items-center gap-1.5">
+                                    <span class="inline-block px-2.5 py-0.5 rounded bg-ef-neon text-black font-tech font-bold text-lg tracking-wider">RF</span>
+                                    <span class="inline-block px-2 py-0.5 rounded bg-ef-card border border-ef-neon/40 text-ef-neon font-tech font-bold text-sm tracking-wider">RW</span>
+                                </div>
+                            </div>
+
+                            <div class="text-right">
+                                <div class="font-tech font-bold text-4xl text-white/90 leading-none tracking-tighter">#07</div>
+                                <div class="mt-1.5 inline-flex items-center gap-1 px-2 py-1 rounded-md bg-ef-bg/80 border border-ef-border text-[10px] font-tech uppercase tracking-wider text-ef-cyan">
+                                    <i class="fa-solid fa-futbol"></i> FUTSAL
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="relative z-10 my-4 mx-auto w-full aspect-[4/4] rounded-xl bg-gradient-to-b from-ef-card/60 to-ef-bg border border-ef-border/80 overflow-hidden group">
+                            <div class="absolute inset-0 ef-stripe opacity-40"></div>
+                            <div class="absolute bottom-0 inset-x-0 h-1/2 bg-gradient-to-t from-ef-bg via-ef-bg/80 to-transparent z-10"></div>
+                            
+                            <img id="player-card-photo" 
+                                 src="https://placehold.co/500x500/11151c/00ff87?text=HAMDAN+%237%0A%5BFoto+Pemain+Placeholder%5D" 
+                                 alt="HAMDAN #7 Futsal Player" 
+                                 class="w-full h-full object-cover object-top transition duration-500 group-hover:scale-105">
+                            
+                            <button onclick="toggleStatsDrawer('photo')" class="absolute top-2.5 right-2.5 z-20 opacity-0 group-hover:opacity-100 transition bg-ef-bg/90 hover:bg-ef-neon text-white hover:text-black border border-ef-border px-2.5 py-1.5 rounded-lg text-[11px] font-tech font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg">
+                                <i class="fa-solid fa-camera"></i> Ganti Foto
+                            </button>
+
+                            <div class="absolute bottom-3 inset-x-3 z-20 text-center">
+                                <div class="text-[10px] font-tech uppercase tracking-[0.2em] text-ef-cyan font-semibold">RIGHT FLANK / RW ATTACKER</div>
+                                <h2 class="font-tech font-bold text-3xl tracking-wider text-white uppercase drop-shadow">HAMDAN</h2>
+                            </div>
+                        </div>
+
+                        <div class="relative z-10 pt-2 border-t border-ef-border/80 flex items-center justify-between text-xs">
+                            <div class="flex items-center gap-2">
+                                <div class="w-6 h-6 rounded bg-ef-cyan/15 border border-ef-cyan/40 flex items-center justify-center text-ef-cyan">
+                                    <i class="fa-solid fa-shield-halved text-xs"></i>
+                                </div>
+                                <div>
+                                    <div class="text-[10px] text-ef-muted uppercase">Akademi / Tim</div>
+                                    <div class="font-tech font-bold text-white tracking-wide">UPGRADE FUTSAL ACADEMY</div>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-[10px] text-ef-muted uppercase">Level</div>
+                                <div class="font-tech font-bold text-ef-neon">KLUB LOKAL</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Side Physical & Condition Telemetry Badges -->
+                <div class="w-28 sm:w-32 flex flex-col gap-2 flex-shrink-0 justify-between">
+                    <div class="bg-ef-panel border border-ef-border rounded-xl p-2.5 text-center shadow-card flex flex-col justify-center">
+                        <div class="text-[9px] font-tech uppercase tracking-widest text-ef-muted">Tinggi</div>
+                        <div class="font-tech font-bold text-sm sm:text-base text-white mt-0.5">161 cm</div>
+                    </div>
+                    <div class="bg-ef-panel border border-ef-border rounded-xl p-2.5 text-center shadow-card flex flex-col justify-center">
+                        <div class="text-[9px] font-tech uppercase tracking-widest text-ef-muted">Berat</div>
+                        <div class="font-tech font-bold text-sm sm:text-base text-white mt-0.5">49 kg</div>
+                    </div>
+                    <div class="bg-ef-panel border border-ef-border rounded-xl p-2.5 text-center shadow-card flex flex-col justify-center">
+                        <div class="text-[9px] font-tech uppercase tracking-widest text-ef-muted">Usia</div>
+                        <div class="font-tech font-bold text-sm sm:text-base text-white mt-0.5">17</div>
+                    </div>
+                    <div class="bg-ef-panel border border-ef-border rounded-xl p-2.5 text-center shadow-card flex flex-col justify-center">
+                        <div class="text-[9px] font-tech uppercase tracking-widest text-ef-muted">Foot</div>
+                        <div class="font-tech font-bold text-xs sm:text-sm text-ef-neon mt-0.5">Kanan</div>
+                    </div>
+                    <div class="bg-ef-panel border border-ef-border rounded-xl p-2.5 text-center shadow-card flex flex-col justify-center">
+                        <div class="text-[9px] font-tech uppercase tracking-widest text-ef-muted">Kondisi</div>
+                        <div class="font-tech font-bold text-sm sm:text-base text-ef-neon mt-0.5 flex items-center justify-center gap-1">
+                            <span class="w-2 h-2 rounded-full bg-ef-neon animate-pulse"></span> A
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Bio Telemetry & Key Highlights -->
+            <div class="lg:col-span-7 flex flex-col gap-6">
+                <div class="bg-ef-panel border border-ef-border rounded-2xl p-5 shadow-card flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-[10px] font-tech font-bold uppercase tracking-widest text-ef-neon">PLAYER PROFILE</span>
+                            <span class="text-slate-500">•</span>
+                            <span class="text-[10px] font-tech uppercase tracking-widest text-ef-muted">FUTSAL DIVISION</span>
+                        </div>
+                        <h1 class="font-tech font-bold text-2xl sm:text-3xl text-white uppercase mt-0.5">HAMDAN <span class="text-ef-neon">#7</span></h1>
+                    </div>
+
+                    <div class="bg-ef-card border border-ef-cyan/30 rounded-xl px-4 py-2.5 flex items-center gap-3">
+                        <div>
+                            <div class="text-[9px] font-tech uppercase tracking-wider text-ef-muted">PLAYING STYLE</div>
+                            <div class="font-tech font-bold text-sm text-ef-cyan">Direct Flank</div>
+                        </div>
+                        <div class="w-8 h-8 rounded-lg bg-ef-cyan/15 border border-ef-cyan/40 flex items-center justify-center text-ef-cyan text-sm">
+                            <i class="fa-solid fa-bolt-lightning"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                    <div class="bg-ef-panel border border-ef-border rounded-xl p-3.5 shadow-card">
+                        <div class="text-[10px] text-ef-muted uppercase font-tech tracking-wider flex items-center gap-1.5">
+                            <i class="fa-solid fa-crosshairs text-ef-neon"></i> Posisi Utama
+                        </div>
+                        <div class="font-tech font-bold text-sm sm:text-base text-white mt-1">Right Flank (RF / RW)</div>
+                    </div>
+
+                    <div class="bg-ef-panel border border-ef-border rounded-xl p-3.5 shadow-card">
+                        <div class="text-[10px] text-ef-muted uppercase font-tech tracking-wider flex items-center gap-1.5">
+                            <i class="fa-solid fa-shoe-prints text-ef-cyan"></i> Kaki Dominan
+                        </div>
+                        <div class="font-tech font-bold text-sm sm:text-base text-white mt-1">Kanan (Right)</div>
+                    </div>
+
+                    <div class="bg-ef-panel border border-ef-border rounded-xl p-3.5 shadow-card">
+                        <div class="text-[10px] text-ef-muted uppercase font-tech tracking-wider flex items-center gap-1.5">
+                            <i class="fa-solid fa-shield text-ef-yellow"></i> Akademi
+                        </div>
+                        <div class="font-tech font-bold text-xs sm:text-sm text-white mt-1 leading-tight">UPGRADE FUTSAL ACADEMY</div>
+                    </div>
+
+                    <div class="bg-ef-panel border border-ef-border rounded-xl p-3.5 shadow-card">
+                        <div class="text-[10px] text-ef-muted uppercase font-tech tracking-wider flex items-center gap-1.5">
+                            <i class="fa-solid fa-layer-group text-ef-neon"></i> Pengalaman
+                        </div>
+                        <div class="font-tech font-bold text-sm sm:text-base text-white mt-1">Klub Lokal</div>
+                    </div>
+                </div>
+
+                <div class="bg-ef-panel border border-ef-border rounded-xl p-4 shadow-card">
+                    <div class="text-[10px] font-tech uppercase tracking-widest text-ef-cyan mb-2.5 font-bold flex items-center gap-2">
+                        <i class="fa-solid fa-chart-pie"></i> Detail Atribut Tambahan (eFootball Style)
+                    </div>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 text-xs">
+                        <div class="bg-ef-card rounded-lg p-2.5 border border-ef-border">
+                            <div class="text-[10px] text-ef-muted">Penggunaan Kaki Lemah</div>
+                            <div class="font-tech font-bold text-white mt-0.5">Sering</div>
+                        </div>
+                        <div class="bg-ef-card rounded-lg p-2.5 border border-ef-border">
+                            <div class="text-[10px] text-ef-muted">Akurasi Kaki Lemah</div>
+                            <div class="font-tech font-bold text-white mt-0.5">Cukup Baik</div>
+                        </div>
+                        <div class="bg-ef-card rounded-lg p-2.5 border border-ef-border">
+                            <div class="text-[10px] text-ef-muted">Wujud Fisik</div>
+                            <div class="font-tech font-bold text-white mt-0.5">Stabil</div>
+                        </div>
+                        <div class="bg-ef-card rounded-lg p-2.5 border border-ef-border">
+                            <div class="text-[10px] text-ef-muted">Ketahanan Cedera</div>
+                            <div class="font-tech font-bold text-white mt-0.5">Medium</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <!-- E. PLAYER STRENGTHS -->
+                    <div class="bg-ef-panel border border-ef-border rounded-2xl p-5 shadow-card flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <div class="flex items-center gap-2">
+                                    <span class="w-2 h-4 rounded-sm bg-ef-neon inline-block"></span>
+                                    <h3 class="font-tech font-bold text-base text-white uppercase tracking-wide">Player Strengths</h3>
+                                </div>
+                                <span class="text-[9px] font-tech font-bold uppercase px-2 py-0.5 rounded bg-ef-neon/15 text-ef-neon border border-ef-neon/30">Core Skills</span>
+                            </div>
+                            <p class="text-xs text-ef-muted mb-3">Atribut utama yang menjadi senjata andalan di sisi sayap kanan saat menyerang.</p>
+                            
+                            <div class="grid grid-cols-2 gap-2.5">
+                                <div class="bg-ef-card border border-ef-border rounded-xl p-2.5 flex items-center gap-2">
+                                    <div class="w-7 h-7 rounded-lg bg-ef-neon/15 text-ef-neon flex items-center justify-center text-xs"><i class="fa-solid fa-bolt"></i></div>
+                                    <span class="font-tech font-bold text-xs text-white">Speed</span>
+                                </div>
+                                <div class="bg-ef-card border border-ef-border rounded-xl p-2.5 flex items-center gap-2">
+                                    <div class="w-7 h-7 rounded-lg bg-ef-cyan/15 text-ef-cyan flex items-center justify-center text-xs"><i class="fa-solid fa-share-nodes"></i></div>
+                                    <span class="font-tech font-bold text-xs text-white">Passing</span>
+                                </div>
+                                <div class="bg-ef-card border border-ef-border rounded-xl p-2.5 flex items-center gap-2">
+                                    <div class="w-7 h-7 rounded-lg bg-ef-yellow/15 text-ef-yellow flex items-center justify-center text-xs"><i class="fa-solid fa-wind"></i></div>
+                                    <span class="font-tech font-bold text-xs text-white">Agility</span>
+                                </div>
+                                <div class="bg-ef-card border border-ef-border rounded-xl p-2.5 flex items-center gap-2">
+                                    <div class="w-7 h-7 rounded-lg bg-emerald-500/15 text-emerald-400 flex items-center justify-center text-xs"><i class="fa-solid fa-bullseye"></i></div>
+                                    <span class="font-tech font-bold text-xs text-white">Finishing</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- F. DEVELOPMENT AREAS -->
+                    <div class="bg-ef-panel border border-ef-border rounded-2xl p-5 shadow-card flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <div class="flex items-center gap-2">
+                                    <span class="w-2 h-4 rounded-sm bg-ef-yellow inline-block"></span>
+                                    <h3 class="font-tech font-bold text-base text-white uppercase tracking-wide">Development Areas</h3>
+                                </div>
+                                <span class="text-[9px] font-tech font-bold uppercase px-2 py-0.5 rounded bg-ef-yellow/15 text-ef-yellow border border-ef-yellow/30">Training Focus</span>
+                            </div>
+                            <p class="text-xs text-ef-muted mb-3">Aspek teknis yang terus diasah secara konsisten dalam sesi latihan rutin.</p>
+                            
+                            <div class="space-y-2">
+                                <div class="bg-ef-card border border-ef-border rounded-xl p-2.5 flex items-center justify-between">
+                                    <div class="flex items-center gap-2">
+                                        <div class="w-6 h-6 rounded-md bg-ef-yellow/15 text-ef-yellow flex items-center justify-center text-[11px]"><i class="fa-solid fa-fire"></i></div>
+                                        <span class="font-tech font-bold text-xs text-white">Shooting</span>
+                                    </div>
+                                    <span class="text-[9px] font-tech uppercase px-2 py-0.5 rounded bg-ef-bg text-ef-muted border border-ef-border">In Progress</span>
+                                </div>
+                                <div class="bg-ef-card border border-ef-border rounded-xl p-2.5 flex items-center justify-between">
+                                    <div class="flex items-center gap-2">
+                                        <div class="w-6 h-6 rounded-md bg-ef-cyan/15 text-ef-cyan flex items-center justify-center text-[11px]"><i class="fa-solid fa-futbol"></i></div>
+                                        <span class="font-tech font-bold text-xs text-white">Ball Control</span>
+                                    </div>
+                                    <span class="text-[9px] font-tech uppercase px-2 py-0.5 rounded bg-ef-bg text-ef-muted border border-ef-border">In Progress</span>
+                                </div>
+                                <div class="bg-ef-card border border-ef-border rounded-xl p-2.5 flex items-center justify-between">
+                                    <div class="flex items-center gap-2">
+                                        <div class="w-6 h-6 rounded-md bg-orange-500/15 text-orange-400 flex items-center justify-center text-[11px]"><i class="fa-solid fa-shoe-prints"></i></div>
+                                        <span class="font-tech font-bold text-xs text-white">Dribbling</span>
+                                    </div>
+                                    <span class="text-[9px] font-tech uppercase px-2 py-0.5 rounded bg-ef-bg text-ef-muted border border-ef-border">In Progress</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-gradient-to-r from-ef-panel via-ef-card to-ef-panel border border-ef-border rounded-2xl p-4 flex items-center gap-4">
+                    <div class="w-11 h-11 rounded-xl bg-ef-neon/10 border border-ef-neon/30 flex-shrink-0 flex items-center justify-center text-ef-neon text-xl">
+                        <i class="fa-solid fa-trophy"></i>
+                    </div>
+                    <div>
+                        <div class="text-[10px] font-tech font-bold uppercase tracking-widest text-ef-neon">PLAYER AMBITION / TARGET</div>
+                        <p class="text-sm text-slate-200 font-medium mt-0.5">
+                            "Terus meningkatkan kemampuan dan berkembang menjadi pemain futsal profesional."
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION B: PLAYER ATTRIBUTES -->
+        <section id="attributes" class="bg-ef-panel border border-ef-border rounded-2xl p-6 shadow-card">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-ef-border pb-5 mb-6">
+                <div>
+                    <div class="flex items-center gap-2">
+                        <span class="w-2.5 h-6 rounded-sm bg-ef-cyan inline-block"></span>
+                        <h2 class="font-tech font-bold text-2xl sm:text-3xl text-white uppercase tracking-wide">Player Attributes</h2>
+                        <span class="text-[11px] font-tech font-bold uppercase px-2 py-0.5 rounded bg-ef-yellow/15 text-ef-yellow border border-ef-yellow/30">Contoh / Placeholder</span>
+                    </div>
+                    <p class="text-xs sm:text-sm text-ef-muted mt-1">Skala rating 1–100 ala eFootball. Nilai di bawah ini adalah contoh awal dan dapat diubah kapan saja.</p>
+                </div>
+
+                <div class="flex flex-wrap items-center gap-3">
+                    <div class="flex items-center gap-2 text-[11px] font-tech bg-ef-bg px-3 py-1.5 rounded-lg border border-ef-border">
+                        <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-ef-neon"></span> 90+</span>
+                        <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-ef-cyan"></span> 80-89</span>
+                        <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-ef-yellow"></span> 70-79</span>
+                        <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-slate-400"></span> &lt;70</span>
+                    </div>
+                    <button onclick="toggleStatsDrawer()" class="px-3.5 py-2 rounded-lg bg-ef-cyan/15 hover:bg-ef-cyan text-ef-cyan hover:text-black border border-ef-cyan/40 font-tech font-bold text-xs uppercase tracking-wider transition flex items-center gap-2">
+                        <i class="fa-solid fa-pen-to-square"></i> Ubah Rating
+                    </button>
+                </div>
+            </div>
+
+            <div id="attributes-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5"></div>
+        </section>
+
+        <!-- SECTION C & D: POSITION MAP & PLAYING STYLE -->
+        <section id="tactics" class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <div class="lg:col-span-7 bg-ef-panel border border-ef-border rounded-2xl p-6 flex flex-col justify-between">
+                <div class="flex items-center justify-between mb-4">
+                    <div>
+                        <h2 class="font-tech font-bold text-xl sm:text-2xl text-white uppercase tracking-wide flex items-center gap-2">
+                            <span class="w-2 h-5 rounded-sm bg-ef-neon inline-block"></span> Position Map
+                        </h2>
+                        <p class="text-xs text-ef-muted mt-0.5">Zona operasi utama pada lapangan futsal standar (5v5)</p>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-ef-neon/15 border border-ef-neon/40 text-ef-neon font-tech font-bold text-xs">
+                            <span class="w-2 h-2 rounded-full bg-ef-neon animate-ping"></span> RIGHT FLANK (RF)
+                        </span>
+                    </div>
+                </div>
+
+                <div class="relative w-full bg-[#0b1318] border border-ef-border rounded-xl p-3 sm:p-5 overflow-hidden">
+                    <div class="flex justify-between items-center text-[10px] font-tech uppercase tracking-widest text-ef-muted mb-2 px-2">
+                        <span><i class="fa-solid fa-shield-halved text-slate-500 mr-1"></i> Own Goal (Defend)</span>
+                        <span class="text-ef-neon font-bold">Attacking Direction <i class="fa-solid fa-arrow-right ml-1"></i></span>
+                    </div>
+
+                    <svg viewBox="0 0 600 320" class="w-full h-auto rounded-lg border border-emerald-500/20 bg-[#0d1915]" role="img" aria-label="Ilustrasi Lapangan Futsal Posisi Right Wing">
+                        <defs>
+                            <pattern id="courtGrid" width="30" height="30" patternUnits="userSpaceOnUse">
+                                <path d="M 30 0 L 0 0 0 30" fill="none" stroke="rgba(0, 255, 135, 0.04)" stroke-width="1"/>
+                            </pattern>
+                            <radialGradient id="rwGlow" cx="50%" cy="50%" r="50%">
+                                <stop offset="0%" stop-color="#00ff87" stop-opacity="0.55"/>
+                                <stop offset="60%" stop-color="#00e5ff" stop-opacity="0.2"/>
+                                <stop offset="100%" stop-color="#00ff87" stop-opacity="0"/>
+                            </radialGradient>
+                        </defs>
+
+                        <rect x="0" y="0" width="600" height="320" fill="url(#courtGrid)"/>
+                        <rect x="20" y="20" width="560" height="280" rx="6" fill="none" stroke="rgba(255,255,255,0.28)" stroke-width="2.5"/>
+
+                        <line x1="300" y1="20" x2="300" y2="300" stroke="rgba(255,255,255,0.25)" stroke-width="2"/>
+                        <circle cx="300" cy="160" r="42" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="2"/>
+                        <circle cx="300" cy="160" r="3.5" fill="rgba(255,255,255,0.5)"/>
+
+                        <path d="M 20 95 A 65 65 0 0 1 85 160 A 65 65 0 0 1 20 225" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="2"/>
+                        <rect x="12" y="135" width="8" height="50" fill="rgba(255,255,255,0.2)" stroke="rgba(255,255,255,0.5)" stroke-width="1.5"/>
+
+                        <path d="M 580 95 A 65 65 0 0 0 515 160 A 65 65 0 0 0 580 225" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="2"/>
+                        <rect x="580" y="135" width="8" height="50" fill="rgba(0,229,255,0.25)" stroke="#00e5ff" stroke-width="1.5"/>
+
+                        <circle cx="95" cy="160" r="2.5" fill="rgba(255,255,255,0.4)"/>
+                        <circle cx="505" cy="160" r="2.5" fill="rgba(255,255,255,0.4)"/>
+
+                        <g opacity="0.45">
+                            <circle cx="48" cy="160" r="11" fill="#161b24" stroke="#64748b" stroke-width="1.5"/>
+                            <text x="48" y="163" text-anchor="middle" fill="#94a3b8" font-family="Chakra Petch" font-size="9" font-weight="bold">GK</text>
+                            <circle cx="195" cy="160" r="11" fill="#161b24" stroke="#64748b" stroke-width="1.5"/>
+                            <text x="195" y="163" text-anchor="middle" fill="#94a3b8" font-family="Chakra Petch" font-size="9" font-weight="bold">ANC</text>
+                            <circle cx="380" cy="65" r="11" fill="#161b24" stroke="#64748b" stroke-width="1.5"/>
+                            <text x="380" y="68" text-anchor="middle" fill="#94a3b8" font-family="Chakra Petch" font-size="9" font-weight="bold">LF</text>
+                            <circle cx="485" cy="160" r="11" fill="#161b24" stroke="#64748b" stroke-width="1.5"/>
+                            <text x="485" y="163" text-anchor="middle" fill="#94a3b8" font-family="Chakra Petch" font-size="9" font-weight="bold">PVT</text>
+                        </g>
+
+                        <ellipse cx="415" cy="252" rx="135" ry="44" fill="url(#rwGlow)"/>
+                        <path d="M 270 258 L 460 258" stroke="#00ff87" stroke-width="2.5" stroke-dasharray="6 4" fill="none"/>
+                        <polygon points="468,258 458,253 458,263" fill="#00ff87"/>
+                        <path d="M 425 248 Q 465 220 495 182" stroke="#00e5ff" stroke-width="2" stroke-dasharray="4 4" fill="none"/>
+                        <polygon points="500,175 490,180 497,186" fill="#00e5ff"/>
+
+                        <g class="rw-hotspot" style="transform-origin: 410px 255px;">
+                            <circle cx="410" cy="255" r="22" fill="rgba(0, 255, 135, 0.2)" stroke="#00ff87" stroke-width="1.5"/>
+                            <circle cx="410" cy="255" r="15" fill="#00ff87" stroke="#090b0e" stroke-width="2"/>
+                            <text x="410" y="259" text-anchor="middle" fill="#090b0e" font-family="Chakra Petch" font-size="11" font-weight="bold">RF</text>
+                        </g>
+
+                        <rect x="334" y="212" width="152" height="20" rx="4" fill="#090b0e" stroke="#00ff87" stroke-width="1"/>
+                        <text x="410" y="225" text-anchor="middle" fill="#00ff87" font-family="Chakra Petch" font-size="10" font-weight="bold">HAMDAN #7 • RIGHT FLANK</text>
+                    </svg>
+                </div>
+
+                <!-- eFootball Style Position Proficiency & Rating Matrix -->
+                <div class="mt-4 bg-[#0b0e14] border border-ef-border rounded-xl p-4">
+                    <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+                        <div class="flex items-center gap-2">
+                            <span class="text-[11px] font-tech font-bold uppercase tracking-wider text-white">Position Proficiency & Rating</span>
+                            <span class="text-[10px] font-tech px-1.5 py-0.5 rounded bg-ef-neon/15 text-ef-neon border border-ef-neon/30">FUTSAL 5v5</span>
+                        </div>
+                        <div class="flex items-center gap-3 text-[10px] font-tech text-ef-muted">
+                            <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-sm bg-[#00e676]"></span> High Familiarity</span>
+                            <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-sm bg-[#064e3b] border border-emerald-500/40"></span> Partial</span>
+                            <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-sm bg-[#1c222d]"></span> Low</span>
+                        </div>
+                    </div>
+
+                    <div id="position-rating-grid" class="grid grid-cols-3 gap-2.5"></div>
+
+                    <div class="grid grid-cols-2 gap-2.5 mt-3 pt-3 border-t border-ef-border/70">
+                        <div class="bg-[#132238] border border-blue-500/30 rounded-lg py-2 px-3 text-center">
+                            <span class="font-tech font-bold text-xs text-sky-400 tracking-wide">Direct Flank</span>
+                        </div>
+                        <button onclick="toggleStatsDrawer('positions')" class="bg-[#132238] hover:bg-[#1a2e4c] border border-blue-500/30 hover:border-ef-cyan rounded-lg py-2 px-3 text-center transition flex items-center justify-center gap-1.5">
+                            <i class="fa-solid fa-sliders text-[11px] text-sky-400"></i>
+                            <span class="font-tech font-bold text-xs text-sky-400 tracking-wide">Atur Rating Posisi</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- D. PLAYING STYLE -->
+            <div class="lg:col-span-5 bg-ef-panel border border-ef-border rounded-2xl p-6 flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <h2 class="font-tech font-bold text-xl sm:text-2xl text-white uppercase tracking-wide flex items-center gap-2">
+                            <span class="w-2 h-5 rounded-sm bg-ef-cyan inline-block"></span> Playing Style
+                        </h2>
+                        <span class="text-[11px] font-tech font-bold uppercase px-2.5 py-1 rounded bg-ef-cyan/10 text-ef-cyan border border-ef-cyan/30">TACTICAL ROLE</span>
+                    </div>
+
+                    <div class="bg-gradient-to-br from-ef-card to-ef-bg border border-ef-cyan/30 rounded-xl p-5 mb-5 relative overflow-hidden">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="w-11 h-11 rounded-lg bg-ef-cyan/15 border border-ef-cyan/40 flex items-center justify-center text-ef-cyan text-xl">
+                                <i class="fa-solid fa-bolt-lightning"></i>
+                            </div>
+                            <div>
+                                <div class="text-[10px] font-tech uppercase tracking-widest text-ef-muted">Archetype</div>
+                                <h3 class="font-tech font-bold text-xl text-white">Direct Flank</h3>
+                            </div>
+                        </div>
+                        <p class="text-sm text-slate-200 leading-relaxed italic border-l-2 border-ef-neon pl-3.5 py-1 bg-ef-neon/5 rounded-r-lg">
+                            "A right-wing attacker who uses speed, agility, and attacking movement to create opportunities for the team."
+                        </p>
+                    </div>
+
+                    <div class="space-y-3">
+                        <h4 class="font-tech font-bold text-xs uppercase tracking-wider text-ef-muted">Karakteristik Pergerakan di Lapangan:</h4>
+                        
+                        <div class="flex items-start gap-3 bg-ef-card/60 border border-ef-border rounded-xl p-3">
+                            <span class="w-6 h-6 rounded-md bg-ef-neon/15 text-ef-neon flex items-center justify-center text-xs font-tech font-bold flex-shrink-0 mt-0.5">01</span>
+                            <div>
+                                <div class="font-tech font-bold text-sm text-white">Explosive Flank Runs</div>
+                                <p class="text-xs text-ef-muted">Memanfaatkan akselerasi dan kecepatan di koridor kanan untuk membuka ruang.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-3 bg-ef-card/60 border border-ef-border rounded-xl p-3">
+                            <span class="w-6 h-6 rounded-md bg-ef-cyan/15 text-ef-cyan flex items-center justify-center text-xs font-tech font-bold flex-shrink-0 mt-0.5">02</span>
+                            <div>
+                                <div class="font-tech font-bold text-sm text-white">Chance Creation & Passing</div>
+                                <p class="text-xs text-ef-muted">Mengombinasikan kelincahan dan umpan cepat untuk menciptakan peluang matang.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-3 bg-ef-card/60 border border-ef-border rounded-xl p-3">
+                            <span class="w-6 h-6 rounded-md bg-ef-yellow/15 text-ef-yellow flex items-center justify-center text-xs font-tech font-bold flex-shrink-0 mt-0.5">03</span>
+                            <div>
+                                <div class="font-tech font-bold text-sm text-white">Off-The-Ball Movement</div>
+                                <p class="text-xs text-ef-muted">Pergerakan tanpa bola yang aktif untuk mendukung transisi menyerang dan finishing.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION G: ABOUT PLAYER -->
+        <section id="profile" class="bg-ef-panel border border-ef-border rounded-2xl p-6">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-ef-border pb-4 mb-5">
+                <div>
+                    <h2 class="font-tech font-bold text-xl sm:text-2xl text-white uppercase tracking-wide flex items-center gap-2">
+                        <span class="w-2 h-5 rounded-sm bg-ef-neon inline-block"></span> About Player
+                    </h2>
+                    <p class="text-xs text-ef-muted mt-0.5">Profil singkat pemain dalam Bahasa Indonesia & English</p>
+                </div>
+
+                <div class="inline-flex rounded-xl bg-ef-bg p-1 border border-ef-border self-start sm:self-auto">
+                    <button id="btn-lang-both" onclick="setBioLang('both')" class="px-3 py-1.5 rounded-lg text-xs font-tech font-bold uppercase tracking-wider bg-ef-card text-ef-neon border border-ef-neon/30 transition">ID + EN</button>
+                    <button id="btn-lang-id" onclick="setBioLang('id')" class="px-3 py-1.5 rounded-lg text-xs font-tech font-bold uppercase tracking-wider text-ef-muted hover:text-white transition">Indonesia</button>
+                    <button id="btn-lang-en" onclick="setBioLang('en')" class="px-3 py-1.5 rounded-lg text-xs font-tech font-bold uppercase tracking-wider text-ef-muted hover:text-white transition">English</button>
+                </div>
+            </div>
+
+            <div id="bio-container" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div id="bio-id" class="bg-ef-card/70 border border-ef-border rounded-xl p-5 relative">
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="px-2 py-0.5 rounded bg-ef-neon/15 text-ef-neon font-tech font-bold text-[11px] uppercase">BAHASA INDONESIA</span>
+                    </div>
+                    <p class="text-sm text-slate-200 leading-relaxed mb-3">
+                        Saya adalah <strong class="text-white">HAMDAN (#7)</strong>, pemain futsal yang berposisi sebagai <strong class="text-ef-neon">Right Flank (RF / RW)</strong> dengan kaki dominan kanan. Saat ini saya berlatih dan berkembang bersama <strong class="text-ef-cyan">UPGRADE FUTSAL ACADEMY</strong> serta memiliki pengalaman bermain di tingkat klub lokal.
+                    </p>
+                    <p class="text-sm text-slate-300 leading-relaxed">
+                        Sebagai pemain bertipe <em>Direct Flank</em>, saya mengandalkan kecepatan, kelincahan, akurasi umpan, serta penyelesaian akhir untuk membantu tim menciptakan peluang. Dengan dedikasi latihan yang konsisten, ambisi saya adalah terus meningkatkan kualitas permainan untuk melangkah menuju level profesional.
+                    </p>
+                </div>
+
+                <div id="bio-en" class="bg-ef-card/70 border border-ef-border rounded-xl p-5 relative">
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="px-2 py-0.5 rounded bg-ef-cyan/15 text-ef-cyan font-tech font-bold text-[11px] uppercase">ENGLISH VERSION</span>
+                    </div>
+                    <p class="text-sm text-slate-200 leading-relaxed mb-3">
+                        I am <strong class="text-white">HAMDAN (#7)</strong>, a right-footed futsal player operating primarily as a <strong class="text-ef-neon">Right Flank (RF / RW)</strong>. I am currently developing my game at <strong class="text-ef-cyan">UPGRADE FUTSAL ACADEMY</strong> with competitive experience at the local club level.
+                    </p>
+                    <p class="text-sm text-slate-300 leading-relaxed">
+                        Playing as a <em>Direct Flank</em>, I utilize pace, agility, passing vision, and finishing to create attacking opportunities for the team. My ultimate ambition is to keep evolving and become a professional futsal player.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION H: GALLERY -->
+        <section id="gallery" class="bg-ef-panel border border-ef-border rounded-2xl p-6">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-ef-border pb-4 mb-6">
+                <div>
+                    <h2 class="font-tech font-bold text-xl sm:text-2xl text-white uppercase tracking-wide flex items-center gap-2">
+                        <span class="w-2 h-5 rounded-sm bg-ef-yellow inline-block"></span> Match & Training Gallery
+                    </h2>
+                    <p class="text-xs text-ef-muted mt-0.5">Dokumentasi pertandingan, sesi latihan, dan kebersamaan bersama UPGRADE FUTSAL ACADEMY</p>
+                </div>
+
+                <div class="flex flex-wrap items-center gap-2">
+                    <div class="flex items-center gap-1 bg-ef-bg p-1 rounded-xl border border-ef-border text-xs font-tech">
+                        <button onclick="filterGallery('all', event)" class="gal-filter active px-2.5 py-1 rounded-lg bg-ef-card text-white font-bold uppercase">Semua</button>
+                        <button onclick="filterGallery('match', event)" class="gal-filter px-2.5 py-1 rounded-lg text-ef-muted hover:text-white uppercase">Match</button>
+                        <button onclick="filterGallery('training', event)" class="gal-filter px-2.5 py-1 rounded-lg text-ef-muted hover:text-white uppercase">Training</button>
+                        <button onclick="filterGallery('team', event)" class="gal-filter px-2.5 py-1 rounded-lg text-ef-muted hover:text-white uppercase">Team</button>
+                    </div>
+
+                    <button onclick="openAddPhotoModal()" class="px-3.5 py-2 rounded-xl bg-ef-neon hover:bg-emerald-400 text-black font-tech font-bold text-xs uppercase tracking-wider transition shadow-neon flex items-center gap-1.5">
+                        <i class="fa-solid fa-plus"></i> Tambah Foto
+                    </button>
+                </div>
+            </div>
+
+            <div id="gallery-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="border-t border-ef-border bg-ef-panel/60 mt-12 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-lg bg-ef-neon text-black font-tech font-bold flex items-center justify-center">7</div>
+                <div>
+                    <div class="font-tech font-bold text-white tracking-wider">HAMDAN #7 — FUTSAL PORTFOLIO</div>
+                    <div class="text-xs text-ef-muted">Right Flank (RF / RW) • UPGRADE FUTSAL ACADEMY</div>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-3">
+                <button onclick="toggleStatsDrawer()" class="text-xs font-tech uppercase tracking-wider text-ef-cyan hover:underline">
+                    <i class="fa-solid fa-sliders mr-1"></i> Panel Statistik
+                </button>
+                <span class="text-ef-border">|</span>
+                <button onclick="openContactModal()" class="text-xs font-tech uppercase tracking-wider text-ef-neon hover:underline">
+                    <i class="fa-solid fa-envelope mr-1"></i> Hubungi Pemain
+                </button>
+            </div>
+        </div>
+    </footer>
+
+    <!-- SETTINGS DRAWER -->
+    <div id="stats-drawer-backdrop" onclick="toggleStatsDrawer()" class="fixed inset-0 bg-black/75 backdrop-blur-sm z-50 hidden transition-opacity"></div>
+    <aside id="stats-drawer" class="fixed top-0 right-0 h-full w-full max-w-md bg-ef-panel border-l border-ef-border z-50 transform translate-x-full transition-transform duration-300 flex flex-col shadow-2xl">
+        <div class="p-5 border-b border-ef-border flex items-center justify-between bg-ef-bg">
+            <div>
+                <div class="text-[10px] font-tech uppercase tracking-widest text-ef-neon">DASHBOARD CUSTOMIZER</div>
+                <h3 class="font-tech font-bold text-xl text-white uppercase">Pengaturan Statistik & Foto</h3>
+            </div>
+            <button onclick="toggleStatsDrawer()" class="w-9 h-9 rounded-lg bg-ef-card hover:bg-ef-border text-slate-300 hover:text-white flex items-center justify-center">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+
+        <div class="p-5 overflow-y-auto flex-1 space-y-6">
+            <div id="drawer-photo-section" class="bg-ef-card border border-ef-border rounded-xl p-4 space-y-3">
+                <div class="flex items-center justify-between">
+                    <h4 class="font-tech font-bold text-sm uppercase text-ef-cyan flex items-center gap-2">
+                        <i class="fa-solid fa-image"></i> Foto Player Card
+                    </h4>
+                    <span class="text-[10px] text-ef-muted">Ganti Placeholder</span>
+                </div>
+                <div>
+                    <label class="block text-xs text-ef-muted mb-1">Upload Foto dari Perangkat:</label>
+                    <input type="file" id="photo-file-input" accept="image/*" onchange="handlePlayerPhotoUpload(event)" class="block w-full text-xs text-slate-300 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-tech file:font-bold file:bg-ef-neon file:text-black hover:file:bg-emerald-400 cursor-pointer">
+                </div>
+                <div>
+                    <label class="block text-xs text-ef-muted mb-1">Atau Masukkan URL Gambar:</label>
+                    <div class="flex gap-2">
+                        <input type="url" id="photo-url-input" placeholder="https://contoh.com/foto.jpg" class="flex-1 bg-ef-bg border border-ef-border rounded-lg px-3 py-1.5 text-xs text-white focus:outline-none focus:border-ef-neon">
+                        <button onclick="applyPlayerPhotoUrl()" class="px-3 py-1.5 rounded-lg bg-ef-cyan text-black font-tech font-bold text-xs uppercase">Pasang</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="drawer-positions-section" class="bg-ef-card border border-ef-border rounded-xl p-4 space-y-3">
+                <div class="flex items-center justify-between border-b border-ef-border pb-2">
+                    <h4 class="font-tech font-bold text-sm uppercase text-ef-neon flex items-center gap-2">
+                        <i class="fa-solid fa-chess-board"></i> Rating Per Posisi Futsal
+                    </h4>
+                    <span class="text-[10px] text-ef-muted">Skala 1-100</span>
+                </div>
+                <div id="drawer-position-sliders" class="space-y-3"></div>
+            </div>
+
+            <div class="bg-ef-card border border-ef-border rounded-xl p-4 flex items-center justify-between">
+                <div>
+                    <div class="font-tech font-bold text-sm text-white uppercase">Overall Rating (OVR)</div>
+                    <div class="text-[11px] text-ef-muted">Dihitung otomatis dari rata-rata atribut</div>
+                </div>
+                <div id="drawer-ovr-preview" class="font-tech font-bold text-3xl text-ef-neon bg-ef-bg px-3.5 py-1 rounded-lg border border-ef-neon/30">75</div>
+            </div>
+
+            <div id="drawer-sliders-container" class="space-y-5"></div>
+        </div>
+
+        <div class="p-4 border-t border-ef-border bg-ef-bg flex items-center justify-between gap-3">
+            <button onclick="resetStatsToDefault()" class="px-3.5 py-2 rounded-lg bg-ef-card hover:bg-red-500/20 text-slate-300 hover:text-red-400 border border-ef-border text-xs font-tech font-bold uppercase tracking-wider transition">
+                <i class="fa-solid fa-rotate-left mr-1"></i> Reset Contoh
+            </button>
+            <button onclick="saveAndCloseDrawer()" class="flex-1 py-2 rounded-lg bg-ef-neon hover:bg-emerald-400 text-black font-tech font-bold text-xs uppercase tracking-wider transition shadow-neon">
+                <i class="fa-solid fa-check mr-1"></i> Simpan Perubahan
+            </button>
+        </div>
+    </aside>
+
+    <!-- ADD PHOTO MODAL -->
+    <div id="add-photo-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+        <div class="bg-ef-panel border border-ef-border rounded-2xl w-full max-w-md p-6 shadow-2xl">
+            <div class="flex items-center justify-between border-b border-ef-border pb-3 mb-4">
+                <h3 class="font-tech font-bold text-xl text-white uppercase flex items-center gap-2">
+                    <i class="fa-solid fa-camera-retro text-ef-neon"></i> Tambah Dokumentasi Galeri
+                </h3>
+                <button onclick="closeAddPhotoModal()" class="text-ef-muted hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <form onsubmit="handleAddGalleryItem(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-tech uppercase text-ef-muted mb-1">Judul Dokumentasi *</label>
+                    <input type="text" id="gal-title" required placeholder="Contoh: Latihan Finishing UPGRADE FUTSAL" class="w-full bg-ef-bg border border-ef-border rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-ef-neon">
+                </div>
+                <div>
+                    <label class="block text-xs font-tech uppercase text-ef-muted mb-1">Kategori *</label>
+                    <select id="gal-category" class="w-full bg-ef-bg border border-ef-border rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-ef-neon">
+                        <option value="match">Match (Pertandingan)</option>
+                        <option value="training">Training (Latihan)</option>
+                        <option value="team">Team (Kebersamaan Tim)</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-tech uppercase text-ef-muted mb-1">Pilih File Foto</label>
+                    <input type="file" id="gal-file" accept="image/*" class="block w-full text-xs text-slate-300 file:mr-3 file:py-2 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-tech file:font-bold file:bg-ef-cyan file:text-black cursor-pointer">
+                </div>
+                <div>
+                    <label class="block text-xs font-tech uppercase text-ef-muted mb-1">Atau Link URL Foto</label>
+                    <input type="url" id="gal-url" placeholder="https://..." class="w-full bg-ef-bg border border-ef-border rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-ef-neon">
+                </div>
+                <div>
+                    <label class="block text-xs font-tech uppercase text-ef-muted mb-1">Keterangan Singkat</label>
+                    <input type="text" id="gal-caption" placeholder="Deskripsi singkat..." class="w-full bg-ef-bg border border-ef-border rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-ef-neon">
+                </div>
+                <div class="pt-2 flex justify-end gap-2">
+                    <button type="button" onclick="closeAddPhotoModal()" class="px-4 py-2 rounded-lg bg-ef-card text-slate-300 font-tech font-bold text-xs uppercase">Batal</button>
+                    <button type="submit" class="px-5 py-2 rounded-lg bg-ef-neon hover:bg-emerald-400 text-black font-tech font-bold text-xs uppercase shadow-neon">Tambahkan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- CONTACT MODAL -->
+    <div id="contact-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+        <div class="bg-ef-panel border border-ef-border rounded-2xl w-full max-w-lg p-6 shadow-2xl relative overflow-hidden">
+            <div class="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-ef-neon via-ef-cyan to-ef-yellow"></div>
+            <div class="flex items-start justify-between border-b border-ef-border pb-4 mb-5">
+                <div class="flex items-center gap-3">
+                    <div class="w-11 h-11 rounded-xl bg-ef-neon/15 border border-ef-neon/40 flex items-center justify-center text-ef-neon font-tech font-bold text-xl">#7</div>
+                    <div>
+                        <span class="text-[10px] font-tech font-bold uppercase tracking-widest text-ef-cyan">PLAYER SCOUTING & INQUIRY</span>
+                        <h3 class="font-tech font-bold text-xl text-white uppercase leading-tight">Hubungi HAMDAN #7</h3>
+                        <p class="text-[11px] text-ef-muted">Right Flank (RF) • UPGRADE FUTSAL ACADEMY</p>
+                    </div>
+                </div>
+                <button onclick="closeContactModal()" class="w-8 h-8 rounded-lg bg-ef-card hover:bg-ef-border text-ef-muted hover:text-white flex items-center justify-center transition"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <div class="grid grid-cols-2 gap-2.5 mb-5">
+                <div class="bg-ef-card/90 border border-ef-border rounded-xl p-3 flex items-center gap-2.5">
+                    <div class="w-8 h-8 rounded-lg bg-emerald-500/15 text-ef-neon flex items-center justify-center flex-shrink-0"><i class="fa-brands fa-whatsapp text-base"></i></div>
+                    <div class="min-w-0">
+                        <div class="text-[10px] font-tech uppercase text-ef-muted">WhatsApp</div>
+                        <div class="text-xs font-semibold text-white truncate">+62 856-0476-3176</div>
+                    </div>
+                </div>
+                <div class="bg-ef-card/90 border border-ef-border rounded-xl p-3 flex items-center gap-2.5">
+                    <div class="w-8 h-8 rounded-lg bg-cyan-500/15 text-ef-cyan flex items-center justify-center flex-shrink-0"><i class="fa-brands fa-instagram text-base"></i></div>
+                    <div class="min-w-0">
+                        <div class="text-[10px] font-tech uppercase text-ef-muted">Instagram</div>
+                        <div class="text-xs font-semibold text-white truncate">@hamdan.rf07</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-ef-bg/80 border-l-2 border-ef-neon rounded-r-xl px-3.5 py-2.5 mb-4">
+                <p class="text-xs text-slate-300 leading-relaxed">
+                    Jika anda memiliki gaya bermain <strong class="text-white">counter attack</strong> dalam melatih sebuah tim <strong class="text-ef-cyan">Maka saya siap menjadi pemain didikan mu dengan patuh dan tekad baja</strong>.
+                </p>
+            </div>
+
+            <form onsubmit="handleContactSubmit(event)" class="space-y-3.5">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-[11px] font-tech font-bold uppercase tracking-wider text-ef-muted mb-1">Nama / Pelatih / Klub *</label>
+                        <input type="text" id="contact-name" required placeholder="Coach Budi / FC..." class="w-full bg-ef-bg border border-ef-border rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-ef-neon">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-tech font-bold uppercase tracking-wider text-ef-muted mb-1">No. WhatsApp / Email *</label>
+                        <input type="text" id="contact-info" required placeholder="0812xxxx..." class="w-full bg-ef-bg border border-ef-border rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-ef-neon">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-[11px] font-tech font-bold uppercase tracking-wider text-ef-muted mb-1">Keperluan *</label>
+                    <select id="contact-subject" class="w-full bg-ef-bg border border-ef-border rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-ef-neon">
+                        <option value="trial">Undangan Trial / Seleksi Pemain</option>
+                        <option value="sparring">Ajakan Sparring untuk tim saya</option>
+                        <option value="tournament">Undangan Turnamen untuk tim saya</option>
+                        <option value="other">Diskusi / Pertanyaan Lainnya</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-[11px] font-tech font-bold uppercase tracking-wider text-ef-muted mb-1">Detail Pesan *</label>
+                    <textarea id="contact-msg" rows="3" required placeholder="Sampaikan jadwal, lokasi lapangan, atau informasi detail lainnya..." class="w-full bg-ef-bg border border-ef-border rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-ef-neon"></textarea>
+                </div>
+                <div class="pt-3 border-t border-ef-border flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5">
+                    <button type="button" onclick="copyPlayerProfileSummary()" class="px-3.5 py-2.5 rounded-xl bg-ef-card hover:bg-ef-border text-ef-cyan border border-ef-cyan/30 font-tech font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition">
+                        <i class="fa-regular fa-copy"></i> Salin CV Singkat Pemain
+                    </button>
+                    <button type="submit" class="px-5 py-2.5 rounded-xl bg-ef-neon hover:bg-emerald-400 text-black font-tech font-bold text-xs uppercase tracking-wider shadow-neon flex items-center justify-center gap-2 transition">
+                        <i class="fa-solid fa-paper-plane"></i> Kirim Pesan Sekarang
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION -->
+    <div id="toast-notification" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+        <div class="bg-ef-card border border-ef-neon text-white px-4 py-3 rounded-xl shadow-neon flex items-center gap-3 text-xs font-medium">
+            <i class="fa-solid fa-circle-check text-ef-neon text-base"></i>
+            <span id="toast-message">Notifikasi</span>
+        </div>
+    </div>
+
+    <!-- External Custom JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>
