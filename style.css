@@ -1,0 +1,359 @@
+/* Custom eFootball / Pro Gaming Dashboard Styling */
+body {
+background-color: #090b0e;
+background-image:
+radial-gradient(circle at 15% 15%, rgba(0, 255, 135, 0.06) 0%, transparent 35%),
+radial-gradient(circle at 85% 30%, rgba(0, 229, 255, 0.06) 0%, transparent 35%),
+linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+background-size: 100% 100%, 100% 100%, 32px 32px, 32px 32px;
+color: #f1f5f9;
+overflow-x: hidden;
+transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Custom eFootball / Pro Gaming Dashboard Styling */
+body {
+background-color: #090b0e;
+background-image:
+radial-gradient(circle at 15% 15%, rgba(0, 255, 135, 0.06) 0%, transparent 35%),
+radial-gradient(circle at 85% 30%, rgba(0, 229, 255, 0.06) 0%, transparent 35%),
+linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+background-size: 100% 100%, 100% 100%, 32px 32px, 32px 32px;
+color: #f1f5f9;
+overflow-x: hidden;
+transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Light Theme Overrides */
+html.light body {
+background-color: #f1f5f9;
+background-image:
+radial-gradient(circle at 15% 15%, rgba(16, 185, 129, 0.08) 0%, transparent 35%),
+radial-gradient(circle at 85% 30%, rgba(6, 182, 212, 0.08) 0%, transparent 35%),
+linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+color: #0f172a;
+}
+
+html.light header {
+background-color: rgba(255, 255, 255, 0.9) !important;
+border-bottom-color: #cbd5e1 !important;
+}
+
+html.light .bg-ef-panel {
+background-color: #ffffff !important;
+border-color: #cbd5e1 !important;
+color: #0f172a !important;
+}
+
+html.light .bg-ef-card,
+html.light .bg-ef-card/90,
+html.light .bg-ef-card/70,
+html.light .bg-ef-card/60 {
+background-color: #f8fafc !important;
+border-color: #e2e8f0 !important;
+color: #0f172a !important;
+}
+
+html.light .bg-ef-bg,
+html.light .bg-ef-bg/80,
+html.light .bg-[#090b0e],
+html.light .bg-[#0b0e14],
+html.light .bg-[#0b1318],
+html.light .bg-[#0d1915] {
+background-color: #f1f5f9 !important;
+border-color: #cbd5e1 !important;
+}
+
+html.light .text-white {
+color: #0f172a !important;
+}
+
+html.light .text-slate-200,
+html.light .text-slate-300 {
+color: #334155 !important;
+}
+
+html.light .text-ef-muted {
+color: #64748b !important;
+}
+
+html.light .border-ef-border {
+border-color: #cbd5e1 !important;
+}
+
+html.light .player-card {
+background: linear-gradient(145deg, #ffffff 0%, #f1f5f9 50%, #e2e8f0 100%) !important;
+border-color: rgba(16, 185, 129, 0.4) !important;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+width: 8px;
+height: 8px;
+}
+::-webkit-scrollbar-track {
+background: #090b0e;
+}
+::-webkit-scrollbar-thumb {
+background: #232b38;
+border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+background: #00ff87;
+}
+
+/* eFootball Player Card Holographic & Geometric Effects */
+.player-card-container {
+perspective: 1000px;
+}
+
+.player-card {
+background: linear-gradient(145deg, #161d29 0%, #0d1117 50%, #101923 100%);
+border: 1px solid rgba(0, 255, 135, 0.35);
+position: relative;
+overflow: hidden;
+transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease;
+}
+
+.player-card:hover {
+transform: translateY(-4px);
+box-shadow: 0 15px 35px -5px rgba(0, 255, 135, 0.2), 0 0 20px rgba(0, 229, 255, 0.15);
+border-color: rgba(0, 255, 135, 0.7);
+}
+
+.player-card::before {
+content: '';
+position: absolute;
+top: -50%;
+left: -50%;
+width: 200%;
+height: 200%;
+background: conic-gradient(from 45deg, transparent 0%, rgba(0, 255, 135, 0.08) 25%, rgba(0, 229, 255, 0.08) 50%, transparent 75%);
+animation: rotateBg 14s linear infinite;
+pointer-events: none;
+}
+
+@keyframes rotateBg {
+100% { transform: rotate(360deg); }
+}
+
+/* Diagonal Stripe Accent */
+.ef-stripe {
+background: repeating-linear-gradient(
+-45deg,
+rgba(0, 255, 135, 0.1),
+rgba(0, 255, 135, 0.1) 6px,
+transparent 6px,
+transparent 12px
+);
+}
+
+/* Progress Bar Transition */
+.stat-bar-fill {
+transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.4s ease;
+}
+
+/* Custom Range Slider for Rating Editor */
+input[type="range"].ef-slider {
+-webkit-appearance: none;
+appearance: none;
+background: #1e2633;
+height: 6px;
+border-radius: 999px;
+outline: none;
+}
+
+input[type="range"].ef-slider::-webkit-slider-thumb {
+-webkit-appearance: none;
+appearance: none;
+width: 16px;
+height: 16px;
+border-radius: 50%;
+background: #00ff87;
+cursor: pointer;
+box-shadow: 0 0 8px rgba(0, 255, 135, 0.8);
+transition: transform 0.15s ease;
+}
+
+input[type="range"].ef-slider::-webkit-slider-thumb:hover {
+transform: scale(1.2);
+}
+
+/* Pulse Glow for Pitch Hotspot */
+@keyframes pulseHotspot {
+0%, 100% { transform: scale(1); opacity: 0.9; }
+50% { transform: scale(1.08); opacity: 1; }
+}
+
+.rw-hotspot {
+animation: pulseHotspot 2.5s infinite ease-in-out;
+}
+
+/* Light Theme Overrides */
+html.light body {
+background-color: #f1f5f9;
+background-image:
+radial-gradient(circle at 15% 15%, rgba(16, 185, 129, 0.08) 0%, transparent 35%),
+radial-gradient(circle at 85% 30%, rgba(6, 182, 212, 0.08) 0%, transparent 35%),
+linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+color: #0f172a;
+}
+
+html.light header {
+background-color: rgba(255, 255, 255, 0.9) !important;
+border-bottom-color: #cbd5e1 !important;
+}
+
+html.light .bg-ef-panel {
+background-color: #ffffff !important;
+border-color: #cbd5e1 !important;
+color: #0f172a !important;
+}
+
+html.light .bg-ef-card,
+html.light .bg-ef-card/90,
+html.light .bg-ef-card/70,
+html.light .bg-ef-card/60 {
+background-color: #f8fafc !important;
+border-color: #e2e8f0 !important;
+color: #0f172a !important;
+}
+
+html.light .bg-ef-bg,
+html.light .bg-ef-bg/80,
+html.light .bg-[#090b0e],
+html.light .bg-[#0b0e14],
+html.light .bg-[#0b1318],
+html.light .bg-[#0d1915] {
+background-color: #f1f5f9 !important;
+border-color: #cbd5e1 !important;
+}
+
+html.light .text-white {
+color: #0f172a !important;
+}
+
+html.light .text-slate-200,
+html.light .text-slate-300 {
+color: #334155 !important;
+}
+
+html.light .text-ef-muted {
+color: #64748b !important;
+}
+
+html.light .border-ef-border {
+border-color: #cbd5e1 !important;
+}
+
+html.light .player-card {
+background: linear-gradient(145deg, #ffffff 0%, #f1f5f9 50%, #e2e8f0 100%) !important;
+border-color: rgba(16, 185, 129, 0.4) !important;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+width: 8px;
+height: 8px;
+}
+::-webkit-scrollbar-track {
+background: #090b0e;
+}
+::-webkit-scrollbar-thumb {
+background: #232b38;
+border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+background: #00ff87;
+}
+
+/* eFootball Player Card Holographic & Geometric Effects */
+.player-card-container {
+perspective: 1000px;
+}
+
+.player-card {
+background: linear-gradient(145deg, #161d29 0%, #0d1117 50%, #101923 100%);
+border: 1px solid rgba(0, 255, 135, 0.35);
+position: relative;
+overflow: hidden;
+transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease;
+}
+
+.player-card:hover {
+transform: translateY(-4px);
+box-shadow: 0 15px 35px -5px rgba(0, 255, 135, 0.2), 0 0 20px rgba(0, 229, 255, 0.15);
+border-color: rgba(0, 255, 135, 0.7);
+}
+
+.player-card::before {
+content: '';
+position: absolute;
+top: -50%;
+left: -50%;
+width: 200%;
+height: 200%;
+background: conic-gradient(from 45deg, transparent 0%, rgba(0, 255, 135, 0.08) 25%, rgba(0, 229, 255, 0.08) 50%, transparent 75%);
+animation: rotateBg 14s linear infinite;
+pointer-events: none;
+}
+
+@keyframes rotateBg {
+100% { transform: rotate(360deg); }
+}
+
+/* Diagonal Stripe Accent */
+.ef-stripe {
+background: repeating-linear-gradient(
+-45deg,
+rgba(0, 255, 135, 0.1),
+rgba(0, 255, 135, 0.1) 6px,
+transparent 6px,
+transparent 12px
+);
+}
+
+/* Progress Bar Transition */
+.stat-bar-fill {
+transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.4s ease;
+}
+
+/* Custom Range Slider for Rating Editor */
+input[type="range"].ef-slider {
+-webkit-appearance: none;
+appearance: none;
+background: #1e2633;
+height: 6px;
+border-radius: 999px;
+outline: none;
+}
+
+input[type="range"].ef-slider::-webkit-slider-thumb {
+-webkit-appearance: none;
+appearance: none;
+width: 16px;
+height: 16px;
+border-radius: 50%;
+background: #00ff87;
+cursor: pointer;
+box-shadow: 0 0 8px rgba(0, 255, 135, 0.8);
+transition: transform 0.15s ease;
+}
+
+input[type="range"].ef-slider::-webkit-slider-thumb:hover {
+transform: scale(1.2);
+}
+
+/* Pulse Glow for Pitch Hotspot */
+@keyframes pulseHotspot {
+0%, 100% { transform: scale(1); opacity: 0.9; }
+50% { transform: scale(1.08); opacity: 1; }
+}
+
+.rw-hotspot {
+animation: pulseHotspot 2.5s infinite ease-in-out;
+}
