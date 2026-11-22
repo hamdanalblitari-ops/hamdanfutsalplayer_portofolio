@@ -1,0 +1,560 @@
+// =========================================================================
+// 1. DEFAULT DATA (ATRIBUT, POSISI, GALERI)
+// =========================================================================
+const DEFAULT_ATTRIBUTES = [
+    {
+        category: "Attacking",
+        icon: "fa-fire-flame-curved",
+        accent: "text-ef-neon",
+        stats: [
+            { id: "finishing", name: "Finishing", value: 78, isStrength: true },
+            { id: "shooting", name: "Shooting", value: 72, isDev: true },
+            { id: "att_awareness", name: "Attacking Awareness", value: 76 }
+        ]
+    },
+    {
+        category: "Technical",
+        icon: "fa-futbol",
+        accent: "text-ef-cyan",
+        stats: [
+            { id: "ball_control", name: "Ball Control", value: 73, isDev: true },
+            { id: "dribbling", name: "Dribbling", value: 74, isDev: true },
+            { id: "passing", name: "Passing", value: 79, isStrength: true },
+            { id: "first_touch", name: "First Touch", value: 75 },
+            { id: "agility", name: "Agility", value: 81, isStrength: true }
+        ]
+    },
+    {
+        category: "Physical",
+        icon: "fa-bolt",
+        accent: "text-ef-yellow",
+        stats: [
+            { id: "speed", name: "Speed", value: 83, isStrength: true },
+            { id: "acceleration", name: "Acceleration", value: 80 },
+            { id: "stamina", name: "Stamina", value: 76 },
+            { id: "balance", name: "Balance", value: 74 }
+        ]
+    },
+    {
+        category: "Defensive",
+        icon: "fa-shield-halved",
+        accent: "text-orange-400",
+        stats: [
+            { id: "def_awareness", name: "Defensive Awareness", value: 68 },
+            { id: "pressing", name: "Pressing", value: 72 },
+            { id: "interception", name: "Interception", value: 69 }
+        ]
+    }
+];
+
+const DEFAULT_GALLERY = [
+    {
+        id: 1,
+        title: "Sesi Latihan Rutin — UPGRADE FUTSAL ACADEMY",
+        category: "training",
+        caption: "Dokumentasi latihan speed & agility di lapangan futsal.",
+        img: "https://placehold.co/600x400/11151c/00ff87?text=TRAINING+SESSION%0A%5BUpload+Foto+Latihan%5D"
+    },
+    {
+        id: 2,
+        title: "Pertandingan Uji Coba Klub Lokal",
+        category: "match",
+        caption: "Dokumentasi pertandingan bersama tim.",
+        img: "https://placehold.co/600x400/11151c/00e5ff?text=MATCH+DAY+%2307%0A%5BUpload+Foto+Pertandingan%5D"
+    },
+    {
+        id: 3,
+        title: "Skuad UPGRADE FUTSAL ACADEMY",
+        category: "team",
+        caption: "Kebersamaan tim setelah sesi latihan.",
+        img: "https://placehold.co/600x400/11151c/facc15?text=TEAM+DOCUMENTATION%0A%5BUpload+Foto+Tim%5D"
+    }
+];
+
+const DEFAULT_POSITIONS = [
+    { id: "rf", code: "RF", name: "Right Flank", rating: 84, familiarity: "high" },
+    { id: "pvt", code: "PVT", name: "Pivot", rating: 84, familiarity: "high" },
+    { id: "lf", code: "LF", name: "Left Flank", rating: 80, familiarity: "partial" },
+    { id: "anc", code: "ANC", name: "Anchor", rating: 76, familiarity: "low" },
+    { id: "gk", code: "GK", name: "Goalkeeper", rating: 50, familiarity: "none" }
+];
+
+// =========================================================================
+// 2. STATE MANAGEMENT (LOCAL STORAGE)
+// =========================================================================
+let playerStats = JSON.parse(localStorage.getItem('hamdan_futsal_stats')) || JSON.parse(JSON.stringify(DEFAULT_ATTRIBUTES));
+let positionRatings = JSON.parse(localStorage.getItem('hamdan_futsal_positions')) || JSON.parse(JSON.stringify(DEFAULT_POSITIONS));
+let galleryItems = JSON.parse(localStorage.getItem('hamdan_futsal_gallery')) || [...DEFAULT_GALLERY];
+let currentGalleryFilter = 'all';
+
+// =========================================================================
+// 3. RENDERING FUNCTIONS (POSITION GRID, ATTRIBUTES, GALLERY)
+// =========================================================================
+function renderPositionGrid() {
+    const grid = document.getElementById('position-rating-grid');
+    if (!grid) return;
+    const posMap = {};
+    positionRatings.forEach(p => posMap[p.id] = p);
+
+    const getTileStyle = (fam) => {
+        if (fam === 'high') return { bg: 'bg-[#00e676] shadow-[0_0_15px_rgba(0,230,118,0.28)] border border-emerald-300/60', code: 'text-[#052e16]', val: 'text-[#052e16]' };
+        if (fam === 'partial') return { bg: 'bg-[#064e3b] border border-emerald-500/40', code: 'text-emerald-300', val: 'text-white' };
+        if (fam === 'low') return { bg: 'bg-[#1a222d] border border-slate-700/80', code: 'text-slate-400', val: 'text-slate-200' };
+        return { bg: 'bg-[#141922] border border-slate-800/80 opacity-75', code: 'text-slate-500', val: 'text-slate-400' };
+    };
+
+    const renderTile = (pos, extraClass = '') => {
+        const st = getTileStyle(pos.familiarity);
+        return `
+            <div onclick="toggleStatsDrawer('positions')" title="Klik untuk ubah rating ${pos.name}" 
+                 class="${st.bg} ${extraClass} rounded-lg p-2.5 flex flex-col items-center justify-center cursor-pointer hover:scale-[1.03] transition select-none">
+                <span class="font-tech font-bold text-[11px] uppercase tracking-wider ${st.code}">${pos.code}</span>
+                <span class="font-tech font-bold text-xl sm:text-2xl leading-tight ${st.val}">${pos.rating}</span>
+                <span class="text-[9px] font-medium ${st.code} opacity-85 truncate max-w-full">${pos.name}</span>
+            </div>
+        `;
+    };
+
+    grid.innerHTML = `
+        ${renderTile(posMap.lf)}
+        ${renderTile(posMap.pvt)}
+        ${renderTile(posMap.rf)}
+        <div class="col-span-3 grid grid-cols-3 gap-2.5">
+            <div></div>
+            ${renderTile(posMap.anc)}
+            <div></div>
+        </div>
+        <div class="col-span-3 grid grid-cols-3 gap-2.5">
+            <div></div>
+            ${renderTile(posMap.gk)}
+            <div></div>
+        </div>
+    `;
+}
+
+function getRatingStyle(val) {
+    if (val >= 90) return { text: 'text-ef-neon', bar: 'bg-ef-neon', badge: 'bg-ef-neon/15 border-ef-neon/40' };
+    if (val >= 80) return { text: 'text-ef-cyan', bar: 'bg-ef-cyan', badge: 'bg-ef-cyan/15 border-ef-cyan/40' };
+    if (val >= 70) return { text: 'text-ef-yellow', bar: 'bg-ef-yellow', badge: 'bg-ef-yellow/15 border-ef-yellow/40' };
+    return { text: 'text-slate-300', bar: 'bg-slate-400', badge: 'bg-slate-700/40 border-slate-600' };
+}
+
+function calculateOverallRating() {
+    let total = 0, count = 0;
+    playerStats.forEach(cat => {
+        cat.stats.forEach(s => { total += Number(s.value); count++; });
+    });
+    return Math.round(total / count);
+}
+
+function renderAttributes() {
+    const grid = document.getElementById('attributes-grid');
+    if (!grid) return;
+    grid.innerHTML = '';
+
+    playerStats.forEach(cat => {
+        const catAvg = Math.round(cat.stats.reduce((acc, s) => acc + Number(s.value), 0) / cat.stats.length);
+        const catStyle = getRatingStyle(catAvg);
+
+        const card = document.createElement('div');
+        card.className = 'bg-ef-card/90 border border-ef-border rounded-xl p-4 flex flex-col justify-between hover:border-ef-border/100 transition';
+
+        let statsHtml = cat.stats.map(stat => {
+            const st = getRatingStyle(stat.value);
+            let tagHtml = '';
+            if (stat.isStrength) tagHtml = `<span class="text-[9px] font-tech uppercase px-1.5 py-0.2 rounded bg-ef-neon/15 text-ef-neon border border-ef-neon/30 ml-1.5">KEY</span>`;
+            else if (stat.isDev) tagHtml = `<span class="text-[9px] font-tech uppercase px-1.5 py-0.2 rounded bg-ef-yellow/15 text-ef-yellow border border-ef-yellow/30 ml-1.5">DEV</span>`;
+
+            return `
+                <div>
+                    <div class="flex items-center justify-between text-xs mb-1">
+                        <span class="text-slate-200 font-medium">${stat.name} ${tagHtml}</span>
+                        <span class="font-tech font-bold text-sm ${st.text}">${stat.value}</span>
+                    </div>
+                    <div class="w-full h-2 bg-ef-bg rounded-full overflow-hidden border border-ef-border/60">
+                        <div class="stat-bar-fill h-full rounded-full ${st.bar}" style="width: ${stat.value}%"></div>
+                    </div>
+                </div>
+            `;
+        }).join('');
+
+        card.innerHTML = `
+            <div>
+                <div class="flex items-center justify-between border-b border-ef-border pb-3 mb-4">
+                    <div class="flex items-center gap-2">
+                        <i class="fa-solid ${cat.icon} ${cat.accent}"></i>
+                        <h3 class="font-tech font-bold text-base uppercase tracking-wider text-white">${cat.category}</h3>
+                    </div>
+                    <span class="font-tech font-bold text-xs px-2 py-0.5 rounded border ${catStyle.badge} ${catStyle.text}">AVG ${catAvg}</span>
+                </div>
+                <div class="space-y-3.5">${statsHtml}</div>
+            </div>
+        `;
+        grid.appendChild(card);
+    });
+
+    const ovr = calculateOverallRating();
+    const cardOvrEl = document.getElementById('card-ovr');
+    const drawerOvrEl = document.getElementById('drawer-ovr-preview');
+    if (cardOvrEl) cardOvrEl.textContent = ovr;
+    if (drawerOvrEl) drawerOvrEl.textContent = ovr;
+}
+
+// =========================================================================
+// 4. CUSTOMIZER DRAWER & STATS CONTROLS
+// =========================================================================
+function renderDrawerSliders() {
+    const posContainer = document.getElementById('drawer-position-sliders');
+    if (posContainer) {
+        posContainer.innerHTML = positionRatings.map((pos, idx) => `
+            <div>
+                <div class="flex items-center justify-between text-xs mb-1">
+                    <label class="text-slate-300 font-medium">${pos.name} <span class="text-ef-muted">(${pos.code})</span></label>
+                    <span id="pos-val-label-${pos.id}" class="font-tech font-bold text-sm text-ef-neon">${pos.rating}</span>
+                </div>
+                <input type="range" min="1" max="100" value="${pos.rating}" class="ef-slider w-full" oninput="updatePositionRating(${idx}, this.value)">
+            </div>
+        `).join('');
+    }
+
+    const container = document.getElementById('drawer-sliders-container');
+    if (!container) return;
+    container.innerHTML = '';
+
+    playerStats.forEach((cat, catIdx) => {
+        const section = document.createElement('div');
+        section.className = 'bg-ef-card border border-ef-border rounded-xl p-4 space-y-3';
+        let slidersHtml = cat.stats.map((stat, statIdx) => {
+            const st = getRatingStyle(stat.value);
+            return `
+                <div>
+                    <div class="flex items-center justify-between text-xs mb-1">
+                        <label for="slider-${stat.id}" class="text-slate-300 font-medium">${stat.name}</label>
+                        <span id="val-label-${stat.id}" class="font-tech font-bold text-sm ${st.text}">${stat.value}</span>
+                    </div>
+                    <input type="range" id="slider-${stat.id}" min="1" max="100" value="${stat.value}" class="ef-slider w-full" oninput="updateSingleStat(${catIdx}, ${statIdx}, this.value)">
+                </div>
+            `;
+        }).join('');
+
+        section.innerHTML = `
+            <h4 class="font-tech font-bold text-xs uppercase tracking-wider ${cat.accent} border-b border-ef-border pb-2">${cat.category} Attributes</h4>
+            <div class="space-y-3">${slidersHtml}</div>
+        `;
+        container.appendChild(section);
+    });
+}
+
+function updateSingleStat(catIdx, statIdx, newValue) {
+    const val = parseInt(newValue, 10);
+    playerStats[catIdx].stats[statIdx].value = val;
+    const statObj = playerStats[catIdx].stats[statIdx];
+    const labelEl = document.getElementById(`val-label-${statObj.id}`);
+    if (labelEl) {
+        const st = getRatingStyle(val);
+        labelEl.textContent = val;
+        labelEl.className = `font-tech font-bold text-sm ${st.text}`;
+    }
+    renderAttributes();
+}
+
+function updatePositionRating(idx, newValue) {
+    const val = parseInt(newValue, 10);
+    positionRatings[idx].rating = val;
+    if (val >= 83) positionRatings[idx].familiarity = 'high';
+    else if (val >= 78) positionRatings[idx].familiarity = 'partial';
+    else if (val >= 70) positionRatings[idx].familiarity = 'low';
+    else positionRatings[idx].familiarity = 'none';
+
+    const labelEl = document.getElementById(`pos-val-label-${positionRatings[idx].id}`);
+    if (labelEl) labelEl.textContent = val;
+    renderPositionGrid();
+}
+
+function saveAndCloseDrawer() {
+    localStorage.setItem('hamdan_futsal_stats', JSON.stringify(playerStats));
+    localStorage.setItem('hamdan_futsal_positions', JSON.stringify(positionRatings));
+    toggleStatsDrawer();
+    showToast('Statistik & rating posisi berhasil diperbarui!');
+}
+
+function resetStatsToDefault() {
+    playerStats = JSON.parse(JSON.stringify(DEFAULT_ATTRIBUTES));
+    positionRatings = JSON.parse(JSON.stringify(DEFAULT_POSITIONS));
+    localStorage.removeItem('hamdan_futsal_stats');
+    localStorage.removeItem('hamdan_futsal_positions');
+    renderAttributes();
+    renderPositionGrid();
+    renderDrawerSliders();
+    showToast('Statistik dikembalikan ke nilai awal.');
+}
+
+function toggleStatsDrawer() {
+    const drawer = document.getElementById('stats-drawer');
+    const backdrop = document.getElementById('stats-drawer-backdrop');
+    const isClosed = drawer.classList.contains('translate-x-full');
+    if (isClosed) {
+        renderDrawerSliders();
+        drawer.classList.remove('translate-x-full');
+        backdrop.classList.remove('hidden');
+    } else {
+        drawer.classList.add('translate-x-full');
+        backdrop.classList.add('hidden');
+    }
+}
+
+function handlePlayerPhotoUpload(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        const dataUrl = e.target.result;
+        document.getElementById('player-card-photo').src = dataUrl;
+        localStorage.setItem('hamdan_player_photo', dataUrl);
+        showToast('Foto Player Card berhasil diganti!');
+    };
+    reader.readAsDataURL(file);
+}
+
+function applyPlayerPhotoUrl() {
+    const url = document.getElementById('photo-url-input').value.trim();
+    if (!url) return;
+    document.getElementById('player-card-photo').src = url;
+    localStorage.setItem('hamdan_player_photo', url);
+    showToast('Foto Player Card berhasil diperbarui!');
+}
+
+// =========================================================================
+// 5. GALLERY CONTROLS
+// =========================================================================
+function renderGallery() {
+    const grid = document.getElementById('gallery-grid');
+    if (!grid) return;
+    grid.innerHTML = '';
+    const filtered = currentGalleryFilter === 'all' 
+        ? galleryItems 
+        : galleryItems.filter(item => item.category === currentGalleryFilter);
+
+    if (filtered.length === 0) {
+        grid.innerHTML = `<div class="col-span-full text-center py-10 bg-ef-card/40 border border-dashed border-ef-border rounded-xl"><p class="text-sm text-ef-muted">Belum ada foto.</p></div>`;
+        return;
+    }
+
+    filtered.forEach(item => {
+        const badgeColor = item.category === 'match' ? 'bg-ef-neon/20 text-ef-neon border-ef-neon/40' : item.category === 'training' ? 'bg-ef-cyan/20 text-ef-cyan border-ef-cyan/40' : 'bg-ef-yellow/20 text-ef-yellow border-ef-yellow/40';
+        const card = document.createElement('div');
+        card.className = 'group bg-ef-card border border-ef-border rounded-xl overflow-hidden flex flex-col justify-between hover:border-ef-neon/50 transition';
+        card.innerHTML = `
+            <div class="relative aspect-video bg-ef-bg overflow-hidden">
+                <img src="${item.img}" alt="${item.title}" onerror="this.src='https://placehold.co/600x400/11151c/8b9bb4?text=Foto'" class="w-full h-full object-cover transition duration-500 group-hover:scale-105">
+                <span class="absolute top-3 left-3 px-2.5 py-0.5 rounded text-[10px] font-tech font-bold uppercase border backdrop-blur-md ${badgeColor}">${item.category}</span>
+                <button onclick="deleteGalleryItem(${item.id})" class="absolute top-3 right-3 w-7 h-7 rounded-lg bg-black/70 hover:bg-red-500 text-white opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-xs"><i class="fa-solid fa-trash"></i></button>
+            </div>
+            <div class="p-4">
+                <h3 class="font-tech font-bold text-base text-white">${item.title}</h3>
+                <p class="text-xs text-ef-muted mt-1">${item.caption || ''}</p>
+            </div>
+        `;
+        grid.appendChild(card);
+    });
+}
+
+function filterGallery(cat, ev) {
+    currentGalleryFilter = cat;
+    document.querySelectorAll('.gal-filter').forEach(btn => {
+        btn.classList.remove('bg-ef-card', 'text-white', 'font-bold');
+        btn.classList.add('text-ef-muted');
+    });
+    if (ev && ev.target) {
+        ev.target.classList.add('bg-ef-card', 'text-white', 'font-bold');
+        ev.target.classList.remove('text-ef-muted');
+    }
+    renderGallery();
+}
+
+function openAddPhotoModal() { 
+    document.getElementById('add-photo-modal').classList.remove('hidden'); 
+    document.getElementById('add-photo-modal').classList.add('flex'); 
+}
+
+function closeAddPhotoModal() { 
+    document.getElementById('add-photo-modal').classList.add('hidden'); 
+    document.getElementById('add-photo-modal').classList.remove('flex'); 
+}
+
+function handleAddGalleryItem(e) {
+    e.preventDefault();
+    const title = document.getElementById('gal-title').value.trim();
+    const category = document.getElementById('gal-category').value;
+    const caption = document.getElementById('gal-caption').value.trim();
+    const urlInput = document.getElementById('gal-url').value.trim();
+    const fileInput = document.getElementById('gal-file').files[0];
+
+    const finalizeAdd = (imgSrc) => {
+        galleryItems.unshift({ id: Date.now(), title, category, caption, img: imgSrc });
+        localStorage.setItem('hamdan_futsal_gallery', JSON.stringify(galleryItems));
+        renderGallery();
+        closeAddPhotoModal();
+        e.target.reset();
+        showToast('Foto baru ditambahkan ke galeri!');
+    };
+
+    if (fileInput) {
+        const reader = new FileReader();
+        reader.onload = (ev) => finalizeAdd(ev.target.result);
+        reader.readAsDataURL(fileInput);
+    } else if (urlInput) {
+        finalizeAdd(urlInput);
+    } else {
+        finalizeAdd(`https://placehold.co/600x400/11151c/00ff87?text=${encodeURIComponent(title)}`);
+    }
+}
+
+function deleteGalleryItem(id) {
+    galleryItems = galleryItems.filter(item => item.id !== id);
+    localStorage.setItem('hamdan_futsal_gallery', JSON.stringify(galleryItems));
+    renderGallery();
+    showToast('Item galeri dihapus.');
+}
+
+// =========================================================================
+// 6. BIO LANGUAGE, CONTACT WHATSAPP, THEME & NAVIGATION SCROLL SPY
+// =========================================================================
+function setBioLang(mode) {
+    const idCard = document.getElementById('bio-id');
+    const enCard = document.getElementById('bio-en');
+    const container = document.getElementById('bio-container');
+
+    ['both', 'id', 'en'].forEach(m => {
+        const btn = document.getElementById(`btn-lang-${m}`);
+        if (btn) btn.className = m === mode ? 'px-3 py-1.5 rounded-lg text-xs font-tech font-bold uppercase tracking-wider bg-ef-card text-ef-neon border border-ef-neon/30 transition' : 'px-3 py-1.5 rounded-lg text-xs font-tech font-bold uppercase tracking-wider text-ef-muted hover:text-white transition';
+    });
+
+    if (mode === 'both') {
+        idCard.classList.remove('hidden');
+        enCard.classList.remove('hidden');
+        container.className = 'grid grid-cols-1 md:grid-cols-2 gap-6';
+    } else if (mode === 'id') {
+        idCard.classList.remove('hidden');
+        enCard.classList.add('hidden');
+        container.className = 'grid grid-cols-1 gap-6';
+    } else {
+        idCard.classList.add('hidden');
+        enCard.classList.remove('hidden');
+        container.className = 'grid grid-cols-1 gap-6';
+    }
+}
+
+function toggleMobileMenu() { document.getElementById('mobile-menu').classList.toggle('hidden'); }
+function openContactModal() { document.getElementById('contact-modal').classList.remove('hidden'); document.getElementById('contact-modal').classList.add('flex'); }
+function closeContactModal() { document.getElementById('contact-modal').classList.add('hidden'); document.getElementById('contact-modal').classList.remove('flex'); }
+
+function handleContactSubmit(e) {
+    e.preventDefault();
+    const phoneNumber = "6285604763176";
+    const name = document.getElementById('contact-name').value.trim();
+    const contactInfo = document.getElementById('contact-info').value.trim();
+    const subjectEl = document.getElementById('contact-subject');
+    const subjectText = subjectEl.options[subjectEl.selectedIndex].text;
+    const message = document.getElementById('contact-msg').value.trim();
+
+    const waText = `Halo *HAMDAN #7*! 👋\nSaya menghubungi melalui Website Portofolio Futsal Anda.\n\n` +
+                   `• *Nama / Klub:* ${name}\n` +
+                   `• *Kontak:* ${contactInfo}\n` +
+                   `• *Keperluan:* ${subjectText}\n\n` +
+                   `*Pesan:*\n${message}`;
+
+    const waUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(waText)}`;
+    window.open(waUrl, '_blank');
+
+    closeContactModal();
+    e.target.reset();
+    showToast('Mengarahkan ke aplikasi WhatsApp...');
+}
+
+function copyPlayerProfileSummary() {
+    const text = `PLAYER PROFILE: HAMDAN (#7)\nSport: Futsal | Position: Right Flank (RF / RW)\nHeight: 161cm | Weight: 49kg | Age: 17 | Foot: Right\nTeam: UPGRADE FUTSAL ACADEMY\nPlaying Style: Direct Flank\nStrengths: Speed, Passing, Agility, Finishing`;
+    const tempInput = document.createElement('textarea');
+    tempInput.value = text;
+    document.body.appendChild(tempInput);
+    tempInput.select();
+    document.execCommand('copy');
+    document.body.removeChild(tempInput);
+    showToast('Ringkasan CV berhasil disalin!');
+}
+
+function toggleTheme() {
+    const htmlEl = document.documentElement;
+    const themeIcon = document.getElementById('theme-icon');
+    if (htmlEl.classList.contains('dark')) {
+        htmlEl.classList.remove('dark');
+        htmlEl.classList.add('light');
+        themeIcon.className = 'fa-solid fa-sun';
+        localStorage.setItem('hamdan_futsal_theme', 'light');
+        showToast('Tema Terang diaktifkan!');
+    } else {
+        htmlEl.classList.remove('light');
+        htmlEl.classList.add('dark');
+        themeIcon.className = 'fa-solid fa-moon';
+        localStorage.setItem('hamdan_futsal_theme', 'dark');
+        showToast('Tema Gelap diaktifkan!');
+    }
+}
+
+function showToast(msg) {
+    const toast = document.getElementById('toast-notification');
+    document.getElementById('toast-message').textContent = msg;
+    toast.classList.remove('translate-y-20', 'opacity-0');
+    setTimeout(() => toast.classList.add('translate-y-20', 'opacity-0'), 3200);
+}
+
+// =========================================================================
+// 7. INITIALIZATION ON PAGE LOAD
+// =========================================================================
+window.addEventListener('DOMContentLoaded', () => {
+    const savedTheme = localStorage.getItem('hamdan_futsal_theme');
+    const htmlEl = document.documentElement;
+    const themeIcon = document.getElementById('theme-icon');
+    if (savedTheme === 'light') {
+        htmlEl.classList.remove('dark');
+        htmlEl.classList.add('light');
+        if (themeIcon) themeIcon.className = 'fa-solid fa-sun';
+    } else {
+        htmlEl.classList.add('dark');
+        if (themeIcon) themeIcon.className = 'fa-solid fa-moon';
+    }
+
+    const savedPhoto = localStorage.getItem('hamdan_player_photo');
+    if (savedPhoto) document.getElementById('player-card-photo').src = savedPhoto;
+    
+    renderAttributes();
+    renderPositionGrid();
+    renderGallery();
+
+    // Scroll Spy for Navbar Active State
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-link');
+
+    const observerOptions = {
+        root: null,
+        rootMargin: '-20% 0px -60% 0px',
+        threshold: 0
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const id = entry.target.getAttribute('id');
+                navLinks.forEach(link => {
+                    if (link.getAttribute('data-target') === id) {
+                        link.className = 'nav-link px-3.5 py-1.5 rounded-lg text-xs font-tech font-semibold uppercase tracking-wider text-white bg-ef-card border border-ef-border/80 transition shadow-sm';
+                    } else {
+                        link.className = 'nav-link px-3.5 py-1.5 rounded-lg text-xs font-tech font-semibold uppercase tracking-wider text-ef-muted hover:text-white transition';
+                    }
+                });
+            }
+        });
+    }, observerOptions);
+
+    sections.forEach(section => observer.observe(section));
+});
